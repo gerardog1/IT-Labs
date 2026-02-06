@@ -10,5 +10,6 @@ This project documents the completion of a basic Active Directory room on TryHac
 - Managing Users & Computers in AD
 - Authentication Methods
 - Delegation
+- Password Policy Change
 
   
