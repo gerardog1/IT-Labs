@@ -25,12 +25,27 @@ Phillip however can't access AD like we did, they must use the following command
 ```bash
 Set-ADAccountPassword sophie -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
 ```
-> Note: Sophie is in the OU that we delegated control to Phillip.
+> Note: Sophie is in the department that we delegated control to Phillip.
 
-In this lab, we changed Sophie's password, and since we we wouldn't want Sophie to keep on using a password we know, we can force a password reset at the next logon for security best practice, with the following command:
+In this lab, we changed Sophie's password as Phillp. Since we we wouldn't want Sophie to keep on using a password we know, we can force a password reset at the next logon for security best practice, with the following command:
 ```bash
 Set-ADUser -ChangePasswordAtLogon $true -Identity sophie -Verbose
 ```
+## Managing Computers
+By default, all the machines that join a domain (except for the DCs) will be put in the container called "Computers".
+<img width="754" height="417" alt="image" src="https://github.com/user-attachments/assets/7423e833-7ddb-4c53-82ce-6bac28a4c1d3" />
+
+There is not only machines here, but also servers. We would very likely want the machines used daily to have different policies from the servers. Let's do this by creating seperate OUs; Workstations, Servers, & Domain Controllers (auto created by Windows)
+<img width="754" height="366" alt="image" src="https://github.com/user-attachments/assets/3d0748fb-ac5f-4253-b967-733f1fb5a81b" />
+
+Now we move the corresponding machines to our newly made OUs.
+## Group Policies
+In Windows we use Group Policy Objects to push different configurations and security baselines to users depending on their department. GPOs are simply a collection of settings that can be applied to OUs. GPOs can contain policies aimed at either users or computers, allowing you to set a baseline on specific machines and identities.
+
+To configure GPOs, you can use the Group Policy Management tool, available from the start menu.
+
+Upon launching the tool, you will see your complete OU hierarchy. To configure Group Policies, you first create a GPO under Group Policy Objects and then link it to the OU where you want the policies to apply. 
+<img width="954" height="577" alt="image" src="https://github.com/user-attachments/assets/0c4fae1d-441a-4666-b148-def3507be56d" />
 
 
 
