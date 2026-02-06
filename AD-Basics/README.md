@@ -9,5 +9,6 @@ This project documents the completion of a basic Active Directory room on TryHac
 - Group Policy Objects
 - Managing Users & Computers in AD
 - Authentication Methods
+- Delegation
 
   
