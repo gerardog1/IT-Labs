@@ -14,16 +14,23 @@ In the case of needing to delegate permissions to a user, you do so by right cli
 
 This opens a new window where you're asked to enter the users whom you want to delegate control.
 <img width="583" height="570" alt="image" src="https://github.com/user-attachments/assets/98199e6a-e054-451e-a34b-76758f689fdd" />
-<img width="583" height="570" alt="image" src="https://github.com/user-attachments/assets/b38fc0ae-4ac3-4acc-a9b3-9146069729fb" />
 
 In this lab we delegate control to Phillip, type his name and click check names, click OK.
 
 Next it will prompt you to select tasks to delegate.
+
 <img width="531" height="414" alt="image" src="https://github.com/user-attachments/assets/e0aba5f9-091b-4ce0-902f-9f40319d8d33" />
+
 Phillip however can't access AD like we did, they must use the following command in powershell:
 ```bash
-\Users\phillip> Set-ADAccountPassword sophie -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
+Set-ADAccountPassword sophie -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
 ```
-> Note: Sofie is in the OU that we delegated control to Phillip.
+> Note: Sophie is in the OU that we delegated control to Phillip.
+
+In this lab, we changed Sophie's password, and since we we wouldn't want Sophie to keep on using a password we know, we can force a password reset at the next logon for security best practice, with the following command:
+```bash
+Set-ADUser -ChangePasswordAtLogon $true -Identity sophie -Verbose
+```
+
 
 
