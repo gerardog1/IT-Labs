@@ -35,7 +35,7 @@ Set-ADUser -ChangePasswordAtLogon $true -Identity sophie -Verbose
 By default, all the machines that join a domain (except for the DCs) will be put in the container called "Computers".
 <img width="754" height="417" alt="image" src="https://github.com/user-attachments/assets/7423e833-7ddb-4c53-82ce-6bac28a4c1d3" />
 
-There is not only machines here, but also servers. We would very likely want the machines used daily to have different policies from the servers. Let's do this by creating seperate OUs; Workstations, Servers, & Domain Controllers (auto created by Windows)
+There is not only machines here, but also servers. We would very likely want the machines used daily to have different policies from the servers. Let's seperate them by creating seperate OUs; Workstations, Servers, & Domain Controllers (auto created by Windows)
 <img width="754" height="366" alt="image" src="https://github.com/user-attachments/assets/3d0748fb-ac5f-4253-b967-733f1fb5a81b" />
 
 Now we move the corresponding machines to our newly made OUs.
@@ -47,5 +47,25 @@ To configure GPOs, you can use the Group Policy Management tool, available from 
 Upon launching the tool, you will see your complete OU hierarchy. To configure Group Policies, you first create a GPO under Group Policy Objects and then link it to the OU where you want the policies to apply. 
 <img width="954" height="577" alt="image" src="https://github.com/user-attachments/assets/0c4fae1d-441a-4666-b148-def3507be56d" />
 
+Lets edit the minimum password length policy. This setting is found within the Default Domain Policy:
+<img width="418" height="374" alt="image" src="https://github.com/user-attachments/assets/4ec39cea-ca57-4b77-9b32-f84503f84bff" />
 
+This will open a new window where we can navigate and edit all the available configurations. To change the minimum password length, go to Computer Configurations -> Policies -> Windows Setting -> Security Settings -> Account Policies -> Password Policy and change the required policy value:
+<img width="787" height="565" alt="image" src="https://github.com/user-attachments/assets/3ee08853-78fd-44e7-955c-f630cbc22c08" />
+
+Next I created a new OU to restrict access to the control panel across all machines to only the users that are part of the IT department.
+<img width="919" height="565" alt="image" src="https://github.com/user-attachments/assets/3905158c-6285-4188-946b-7195c69d298f" />
+
+Upon opening this newly created GPO for editing, I navigated to the shown path to get to "Prohibit access to Control Panel and PC settings". And change it to Enabled.
+
+Once the GPO is configured, it needs to be linked to all of the OUs corresponding to users who shouldn't have access to the Control Panel of their PCs. In this case, I linked the Marketing, Management and Sales OUs by dragging the GPO to each of them:
+<img width="923" height="619" alt="image" src="https://github.com/user-attachments/assets/43debb13-4297-4344-8857-12ccb7a7d577" />
+
+I next created one more GPO to auto lock the screen after a certain amount of time. I created the GPO and navigated to the following route:
+<img width="787" height="565" alt="image" src="https://github.com/user-attachments/assets/ebf4393b-834a-48bc-bd16-46ce2abd2a92" />
+
+I set the inactivity limit to 5 minutes so that computers get locked automatically if any user leaves their session open. I then linked the GPO to the root domain by dragging the GPO to it:
+<img width="923" height="579" alt="image" src="https://github.com/user-attachments/assets/30d72961-0be0-4d9b-8dd2-568df1aae835" />
+
+I then RDP'd into user "Mark" to confirm the settings. I then got a message indicating the operation is blocked and to contact the admin, confirming it worked.
 
